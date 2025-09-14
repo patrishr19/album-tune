@@ -1,0 +1,203 @@
+body{
+    margin: 0;
+    overflow-x: hidden;
+    background-color: black;
+}
+.background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1000px;
+    background: url("../img/background/background2.jpg") no-repeat top center / cover;
+    z-index: -1;
+
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+}
+.wrapper{
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+/* NAVBAR */
+.header{
+    width: 100%;
+}
+.invert{
+    filter: invert(100%);
+    opacity: 1;
+    width: 5rem;
+}
+.title{
+    font-size: 2rem;
+    font-family: "Poppins", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+}
+.navbar-brand{
+    margin-right: 1rem !important;
+    margin-left: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.navbar-brand:hover{
+    transform: translateY(-10px) scale(1.03);
+}
+.navbar-nav li{
+    display: flex;
+    margin-left: 1rem;
+}
+.nav-link{
+    text-decoration: none;
+    color: #fff;
+}
+.dropdown-menu{
+    background-color: transparent !important;
+    border-color: transparent;
+}
+.dropdown-menu li a{
+    color: #ffff;
+}
+.dropdown-menu li{
+    color: #ffff;
+}
+.dropdown-item{
+    opacity: 1 !important;
+}
+.dropdown-menu li a:hover{
+    background-color: #fff;
+}
+.navbar .form-control::placeholder{
+    color: white;
+    opacity: 1;
+    background-color: transparent;
+}
+.navbar-nav{
+    width: 100%;
+}
+.navbar-nav form{
+    display: flex;
+    flex: 1;
+    opacity: 0.9;
+}
+.navbar-nav form button{
+    padding: 0 1rem .3rem;
+}
+.navbar-nav .form-control{
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-self: end;
+}
+.nav-item{
+    margin-left: 0 !important;
+}
+@media (max-width: 991px){
+    .navbar-nav{
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        align-items: center !important;
+    }
+    .nav-item{
+        margin: 0 !important;
+    }
+    .navbar-nav form{
+        flex: 1;
+        width: 50%;
+    }
+    .navbar-nav .form-control{
+        height: 2rem;
+    }
+    .navbar-nav form button{
+        padding: 0;
+    }
+}
+.navbar-nav a{
+    font-size: .85rem;
+    font-family: "Poppins", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+/* ALBUMS  */
+.albumBox img{
+    height: auto;
+    max-width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform, box-shadow;
+}
+.albumBox{
+    display: flex;
+    flex-direction: column;
+}
+.albumRow{
+    display: flex;
+}
+.albumRow .col{
+    justify-content: center;
+}
+.albumBox span{
+    display: flex;
+    color: white;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 300;
+    font-style: normal;
+    justify-content: center;
+    line-height: 1.2;
+    opacity: 0.9;
+    font-size: .8rem;
+}
+.albumBox img:hover{
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+}
+.loadBtn span{
+    font-family: "Roboto Mono", monospace;
+    font-style: normal;
+    line-height: 1;
+    font-weight: 300;
+    display: inline-block;
+    font-size: 1rem;
+}
+/* Footer */
+.footer{
+    padding: 4rem 0;
+}
+.footerRow{
+    gap: 2rem;
+}
+.footerRow img{
+    height: auto;
+    max-width: 6rem;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.footerRow a{
+    padding: .8rem 1rem;
+    background-color: transparent;
+}
+.footerRow a img {
+    transition: filter 0.3s ease;
+}
+.footerRow a:hover img {
+    filter: invert(1) brightness(0);
+}
+.info-box{
+    text-align: center;
+}
+.foot{
+    margin-top: 3rem;
+    font-size: .85rem;
+    font-family: "Poppins", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+.foot .name{
+    color: rgba(255, 255, 255, 0.8);
+}
+.foot .copyright{
+    color: rgb(1, 149, 211)
+}
