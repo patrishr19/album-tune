@@ -16,4 +16,4 @@ A web app where users can submit a music album which can be approved later by an
 - Spotify Web API
 
 ## License
-- This project is for educ
+- This project is for educational purposes 
