@@ -3,15 +3,34 @@
     include "db.php";
     include "admin/include/ignoredFunc.php";
     include "admin/include/spotifyFunc.php";
+    include "admin/include/dbFunc.php";
+
+    if (isset($_GET["limit"])) {
+        $addLimit = (int)$_GET["limit"] ?? false;
+        if (!is_int($addLimit) || $addLimit === false || $addLimit < 0) {
+            $limit = 9;
+        }
+        else {
+            $limit = (int)$addLimit;
+            $limitValue = $limit + 9;
+        }
+    }
+    else {
+        $limit = 9;
+    }
+    $allAlbums = getAllAlbums($limit);
+    //var_dump($allAlbums);
+    $link = "https://open.spotify.com/album/28DJ00Yr5oOhH0uOUgTQwc";
     $clientInfo = getClientInfo();
     $clientID = $clientInfo["clientID"];
     $clientSecret = $clientInfo["clientSecret"];
 
     $token = accessToken($clientID, $clientSecret);
-    $albumID = getAlbumID("https://open.spotify.com/album/28DJ00Yr5oOhH0uOUgTQwc");
-    $album = fetchAlbumInfo($albumID, $token);
+    //$albumID = getAlbumID("$link");
     
-    $cover = $album["images"][0]["url"];
+    if (isset($_SESSION["successInsertAlbum"])) {
+        echo $_SESSION["outputInsertAlbum"];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,8 +48,8 @@
     <div class="background">
 
     </div>
-    <div class="wrapper">
-        <div class="header mb-4">
+    <div class="wrapper d-flex flex-column">
+        <div class="header mb-5">
             <div class="navbar navbar-expand-lg navbar-dark">
                 <div class="container-fluid">
                     <a href="../album-tune" class="navbar-brand"><img src="assets/img/navbar/logo.svg" alt="" class="invert"></a>
@@ -71,101 +90,59 @@
         </div>
         <div class="container mt-5 mb-5">
             <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-5 albumRow">
+                <?php foreach ($allAlbums as $oneAlbum) {
+                    $album = fetchAlbumInfo($oneAlbum["spotify_ID"], $token);
+                    //var_dump($album); 
+                    $cover = $album["images"][0]["url"];
+
+                    $artistsAll = [];
+                    foreach ($album["artists"] as $art) {
+                    $artistID = $art["id"];
+                    $artist = fetchArtistInfo($artistID, $token);
+                    $artistsAll[$artistID] = "<a href='" . $artist["external_urls"]["spotify"] . "' target='_blank'>". $artist["name"] ."</a>";
+                    }
+                    if (count($artistsAll) > 1) {
+                        $byAuthor = implode(", ", $artistsAll);
+                    }
+                    else {
+                        $byAuthor = $artistsAll[$artistID];
+                    }
+                ?>
                 <div class="col d-flex">
                     <div class="albumBox d-flex">
-                        <img class="img-fluid mb-2" src='<?=$album["images"][0]['url']?>'>
-                        <span>Add Violence</span>
-                        <span>By: Nine Inch Nails</span>
-                        <span>Released: 2017-5-21</span>
+                        <img class="img-fluid mb-2 rounded-2" src='<?=$album["images"][0]['url']?>'>
+                        <span class="text-center"><?=htmlspecialchars($album["name"])?></span>
+                        <span class="text-center">By:&nbsp<?=$byAuthor?></span>
+                        <span class="text-center">Released: <?=htmlspecialchars($album["release_date"])?></span>
                     </div>
                 </div>
-                <div class="col d-flex">
-                    <div class="albumBox d-flex">
-                        <img class="img-fluid mb-2" src='<?=$album["images"][0]['url']?>'>
-                        <span>Add Violence</span>
-                        <span>By: Nine Inch Nails</span>
-                        <span>Released: 2017-5-21</span>
-                    </div>
-                </div>
-                <div class="col d-flex">
-                    <div class="albumBox d-flex">
-                        <img class="img-fluid mb-2" src='<?=$album["images"][0]['url']?>'>
-                        <span>Add Violence</span>
-                        <span>By: Nine Inch Nails</span>
-                        <span>Released: 2017-5-21</span>
-                    </div>
-                </div>
-                <div class="col d-flex">
-                    <div class="albumBox d-flex">
-                        <img class="img-fluid mb-2" src='<?=$album["images"][0]['url']?>'>
-                        <span>Add Violence</span>
-                        <span>By: Nine Inch Nails</span>
-                        <span>Released: 2017-5-21</span>
-                    </div>
-                </div>
-                <div class="col d-flex">
-                    <div class="albumBox d-flex">
-                        <img class="img-fluid mb-2" src='<?=$album["images"][0]['url']?>'>
-                        <span>Add Violence</span>
-                        <span>By: Nine Inch Nails</span>
-                        <span>Released: 2017-5-21</span>
-                    </div>
-                </div>
-                <div class="col d-flex">
-                    <div class="albumBox d-flex">
-                        <img class="img-fluid mb-2" src='<?=$album["images"][0]['url']?>'>
-                        <span>Add Violence</span>
-                        <span>By: Nine Inch Nails</span>
-                        <span>Released: 2017-5-21</span>
-                    </div>
-                </div>
-                <div class="col d-flex">
-                    <div class="albumBox d-flex">
-                        <img class="img-fluid mb-2" src='<?=$album["images"][0]['url']?>'>
-                        <span>Add Violence</span>
-                        <span>By: Nine Inch Nails</span>
-                        <span>Released: 2017-5-21</span>
-                    </div>
-                </div>
-                <div class="col d-flex">
-                    <div class="albumBox d-flex">
-                        <img class="img-fluid mb-2" src='<?=$album["images"][0]['url']?>'>
-                        <span>Add Violence</span>
-                        <span>By: Nine Inch Nails</span>
-                        <span>Released: 2017-5-21</span>
-                    </div>
-                </div>
-                <div class="col d-flex">
-                    <div class="albumBox d-flex">
-                        <img class="img-fluid mb-2" src='<?=$album["images"][0]['url']?>'>
-                        <span>Add Violence</span>
-                        <span>By: Nine Inch Nails</span>
-                        <span>Released: 2017-5-21</span>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
         <div class="container-fluid mb-3">
             <div class="row g-3 justify-content-center">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 d-flex">
-                    <button type="button" class="btn btn-outline-light loadBtn flex-fill">
-                        <span>Load more</span>
-                    </button>
+                    <form action="index.php" class="d-flex flex-fill" method="get">
+                        <input type="hidden" name="limit" value="<?=$limitValue ?? 18?>">
+                        <button type="submit" class="btn btn-outline-light loadBtn flex-fill">
+                            <span>Load more</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
         <div class="footer">
             <div class="d-flex justify-content-center footerRow">
-                <a class="btn btn-outline-light rounded-0" href="https://www.instagram.com/patriks_borza/"><img src="assets/img/footer/instagram.svg" alt="Instagram"></a>
-                <a class="btn btn-outline-light rounded-0" href="https://www.linkedin.com/in/patrik-borza-310124377/"><img src="assets/img/footer/linkedin.svg" alt="Linkedin"></a>
-                <a class="btn btn-outline-light rounded-0" href="https://github.com/patrishr19"><img src="assets/img/footer/github.svg" alt="Github"></a>
+            <a class="btn btn-outline-light rounded-0" href="https://www.instagram.com/patriks_borza/"><img src="assets/img/footer/instagram.svg" alt="Instagram"></a>
+            <a class="btn btn-outline-light rounded-0" href="https://www.linkedin.com/in/patrik-borza-310124377/"><img src="assets/img/footer/linkedin.svg" alt="Linkedin"></a>
+            <a class="btn btn-outline-light rounded-0" href="https://github.com/patrishr19"><img src="assets/img/footer/github.svg" alt="Github"></a>
+        </div>
+        <div class="info-box">
+            <div class="foot">
+                <span class="name">Patrik Borza</span>
+                <span class="copyright">©2025</span>
             </div>
-            <div class="info-box">
-                <div class="foot">
-                    <span class="name">Patrik Borza</span>
-                    <span class="copyright">©2025</span>
-                </div>
-            </div>
+        </div>
         </div>
     </div>
 </body>

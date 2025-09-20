@@ -66,5 +66,9 @@
     <?php
         }
     ?>
+    <form action="action/addAlbum.php" method="post">
+        <input type="text" name="link" placeholder="type spotify link">
+        <input type="submit" value="submit">
+    </form>
 </body>
 </html>
